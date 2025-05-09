@@ -1,0 +1,471 @@
+iac@compute-vm-2-2-20-hdd-1746518423339:~/terraform_yandex$ terraform apply -auto-approve
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # yandex_compute_disk.boot-disk["vm-1"] will be created
+  + resource "yandex_compute_disk" "boot-disk" {
+      + block_size  = 4096
+      + created_at  = (known after apply)
+      + folder_id   = "b1gdjtjk7s19oqvpmgtp"
+      + id          = (known after apply)
+      + image_id    = "fd84tpdkg4e6fb67p6fs"
+      + name        = "s19255427-vm1-disk"
+      + product_ids = (known after apply)
+      + size        = 15
+      + status      = (known after apply)
+      + type        = "network-hdd"
+      + zone        = "ru-central1-a"
+
+      + disk_placement_policy (known after apply)
+
+      + hardware_generation (known after apply)
+    }
+
+  # yandex_compute_disk.boot-disk["vm-2"] will be created
+  + resource "yandex_compute_disk" "boot-disk" {
+      + block_size  = 4096
+      + created_at  = (known after apply)
+      + folder_id   = "b1gdjtjk7s19oqvpmgtp"
+      + id          = (known after apply)
+      + image_id    = "fd84tpdkg4e6fb67p6fs"
+      + name        = "s19255427-vm2-disk"
+      + product_ids = (known after apply)
+      + size        = 15
+      + status      = (known after apply)
+      + type        = "network-hdd"
+      + zone        = "ru-central1-a"
+
+      + disk_placement_policy (known after apply)
+
+      + hardware_generation (known after apply)
+    }
+
+  # yandex_compute_disk.boot-disk["vm-3"] will be created
+  + resource "yandex_compute_disk" "boot-disk" {
+      + block_size  = 4096
+      + created_at  = (known after apply)
+      + folder_id   = "b1gdjtjk7s19oqvpmgtp"
+      + id          = (known after apply)
+      + image_id    = "fd84tpdkg4e6fb67p6fs"
+      + name        = "s19255427-vm3-disk"
+      + product_ids = (known after apply)
+      + size        = 15
+      + status      = (known after apply)
+      + type        = "network-hdd"
+      + zone        = "ru-central1-a"
+
+      + disk_placement_policy (known after apply)
+
+      + hardware_generation (known after apply)
+    }
+
+  # yandex_compute_disk.boot-disk["vm-4"] will be created
+  + resource "yandex_compute_disk" "boot-disk" {
+      + block_size  = 4096
+      + created_at  = (known after apply)
+      + folder_id   = "b1gdjtjk7s19oqvpmgtp"
+      + id          = (known after apply)
+      + image_id    = "fd84tpdkg4e6fb67p6fs"
+      + name        = "s19255427-vm4-disk"
+      + product_ids = (known after apply)
+      + size        = 15
+      + status      = (known after apply)
+      + type        = "network-hdd"
+      + zone        = "ru-central1-a"
+
+      + disk_placement_policy (known after apply)
+
+      + hardware_generation (known after apply)
+    }
+
+  # yandex_compute_instance.virtual_machine["vm-1"] will be created
+  + resource "yandex_compute_instance" "virtual_machine" {
+      + created_at                = (known after apply)
+      + folder_id                 = "b1gdjtjk7s19oqvpmgtp"
+      + fqdn                      = (known after apply)
+      + gpu_cluster_id            = (known after apply)
+      + hardware_generation       = (known after apply)
+      + hostname                  = "s19255427-web1"
+      + id                        = (known after apply)
+      + maintenance_grace_period  = (known after apply)
+      + maintenance_policy        = (known after apply)
+      + metadata                  = {
+          + "user-data" = <<-EOT
+                #cloud-config
+                
+                package_update: true
+                package_upgrade: true
+                
+                ssh_pwauth: false
+                
+                users:
+                - name: ansible
+                  gecos: Ansible User
+                  groups: users,admin,wheel
+                  sudo: ALL=(ALL) NOPASSWD:ALL
+                  shell: /bin/bash
+                  lock_passwd: true
+                  ssh_authorized_keys:
+                    - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL+aHg5Lj+UU55rrFyHxKu/m6jggTy5bfCcNt87Y3dhA
+            EOT
+        }
+      + name                      = "s19255427-vm1"
+      + network_acceleration_type = "standard"
+      + platform_id               = "standard-v1"
+      + service_account_id        = (known after apply)
+      + status                    = (known after apply)
+      + zone                      = (known after apply)
+
+      + boot_disk {
+          + auto_delete = true
+          + device_name = (known after apply)
+          + disk_id     = (known after apply)
+          + mode        = (known after apply)
+
+          + initialize_params (known after apply)
+        }
+
+      + metadata_options (known after apply)
+
+      + network_interface {
+          + index              = (known after apply)
+          + ip_address         = (known after apply)
+          + ipv4               = true
+          + ipv6               = (known after apply)
+          + ipv6_address       = (known after apply)
+          + mac_address        = (known after apply)
+          + nat                = true
+          + nat_ip_address     = (known after apply)
+          + nat_ip_version     = (known after apply)
+          + security_group_ids = (known after apply)
+          + subnet_id          = (known after apply)
+        }
+
+      + placement_policy (known after apply)
+
+      + resources {
+          + core_fraction = 100
+          + cores         = 2
+          + memory        = 2
+        }
+
+      + scheduling_policy (known after apply)
+    }
+
+  # yandex_compute_instance.virtual_machine["vm-2"] will be created
+  + resource "yandex_compute_instance" "virtual_machine" {
+      + created_at                = (known after apply)
+      + folder_id                 = "b1gdjtjk7s19oqvpmgtp"
+      + fqdn                      = (known after apply)
+      + gpu_cluster_id            = (known after apply)
+      + hardware_generation       = (known after apply)
+      + hostname                  = "s19255427-web2"
+      + id                        = (known after apply)
+      + maintenance_grace_period  = (known after apply)
+      + maintenance_policy        = (known after apply)
+      + metadata                  = {
+          + "user-data" = <<-EOT
+                #cloud-config
+                
+                package_update: true
+                package_upgrade: true
+                
+                ssh_pwauth: false
+                
+                users:
+                - name: ansible
+                  gecos: Ansible User
+                  groups: users,admin,wheel
+                  sudo: ALL=(ALL) NOPASSWD:ALL
+                  shell: /bin/bash
+                  lock_passwd: true
+                  ssh_authorized_keys:
+                    - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL+aHg5Lj+UU55rrFyHxKu/m6jggTy5bfCcNt87Y3dhA
+            EOT
+        }
+      + name                      = "s19255427-vm2"
+      + network_acceleration_type = "standard"
+      + platform_id               = "standard-v1"
+      + service_account_id        = (known after apply)
+      + status                    = (known after apply)
+      + zone                      = (known after apply)
+
+      + boot_disk {
+          + auto_delete = true
+          + device_name = (known after apply)
+          + disk_id     = (known after apply)
+          + mode        = (known after apply)
+
+          + initialize_params (known after apply)
+        }
+
+      + metadata_options (known after apply)
+
+      + network_interface {
+          + index              = (known after apply)
+          + ip_address         = (known after apply)
+          + ipv4               = true
+          + ipv6               = (known after apply)
+          + ipv6_address       = (known after apply)
+          + mac_address        = (known after apply)
+          + nat                = true
+          + nat_ip_address     = (known after apply)
+          + nat_ip_version     = (known after apply)
+          + security_group_ids = (known after apply)
+          + subnet_id          = (known after apply)
+        }
+
+      + placement_policy (known after apply)
+
+      + resources {
+          + core_fraction = 100
+          + cores         = 2
+          + memory        = 2
+        }
+
+      + scheduling_policy (known after apply)
+    }
+
+  # yandex_compute_instance.virtual_machine["vm-3"] will be created
+  + resource "yandex_compute_instance" "virtual_machine" {
+      + created_at                = (known after apply)
+      + folder_id                 = "b1gdjtjk7s19oqvpmgtp"
+      + fqdn                      = (known after apply)
+      + gpu_cluster_id            = (known after apply)
+      + hardware_generation       = (known after apply)
+      + hostname                  = "s19255427-proxy"
+      + id                        = (known after apply)
+      + maintenance_grace_period  = (known after apply)
+      + maintenance_policy        = (known after apply)
+      + metadata                  = {
+          + "user-data" = <<-EOT
+                #cloud-config
+                
+                package_update: true
+                package_upgrade: true
+                
+                ssh_pwauth: false
+                
+                users:
+                - name: ansible
+                  gecos: Ansible User
+                  groups: users,admin,wheel
+                  sudo: ALL=(ALL) NOPASSWD:ALL
+                  shell: /bin/bash
+                  lock_passwd: true
+                  ssh_authorized_keys:
+                    - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL+aHg5Lj+UU55rrFyHxKu/m6jggTy5bfCcNt87Y3dhA
+            EOT
+        }
+      + name                      = "s19255427-vm3"
+      + network_acceleration_type = "standard"
+      + platform_id               = "standard-v1"
+      + service_account_id        = (known after apply)
+      + status                    = (known after apply)
+      + zone                      = (known after apply)
+
+      + boot_disk {
+          + auto_delete = true
+          + device_name = (known after apply)
+          + disk_id     = (known after apply)
+          + mode        = (known after apply)
+
+          + initialize_params (known after apply)
+        }
+
+      + metadata_options (known after apply)
+
+      + network_interface {
+          + index              = (known after apply)
+          + ip_address         = (known after apply)
+          + ipv4               = true
+          + ipv6               = (known after apply)
+          + ipv6_address       = (known after apply)
+          + mac_address        = (known after apply)
+          + nat                = true
+          + nat_ip_address     = (known after apply)
+          + nat_ip_version     = (known after apply)
+          + security_group_ids = (known after apply)
+          + subnet_id          = (known after apply)
+        }
+
+      + placement_policy (known after apply)
+
+      + resources {
+          + core_fraction = 100
+          + cores         = 2
+          + memory        = 2
+        }
+
+      + scheduling_policy (known after apply)
+    }
+
+  # yandex_compute_instance.virtual_machine["vm-4"] will be created
+  + resource "yandex_compute_instance" "virtual_machine" {
+      + created_at                = (known after apply)
+      + folder_id                 = "b1gdjtjk7s19oqvpmgtp"
+      + fqdn                      = (known after apply)
+      + gpu_cluster_id            = (known after apply)
+      + hardware_generation       = (known after apply)
+      + hostname                  = "s19255427-ansible"
+      + id                        = (known after apply)
+      + maintenance_grace_period  = (known after apply)
+      + maintenance_policy        = (known after apply)
+      + metadata                  = {
+          + "user-data" = <<-EOT
+                #cloud-config
+                
+                package_update: true
+                package_upgrade: true
+                
+                ssh_pwauth: false
+                
+                users:
+                - name: ansible
+                  gecos: Ansible User
+                  groups: users,admin,wheel
+                  sudo: ALL=(ALL) NOPASSWD:ALL
+                  shell: /bin/bash
+                  lock_passwd: true
+                  ssh_authorized_keys:
+                    - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL+aHg5Lj+UU55rrFyHxKu/m6jggTy5bfCcNt87Y3dhA
+            EOT
+        }
+      + name                      = "s19255427-vm4"
+      + network_acceleration_type = "standard"
+      + platform_id               = "standard-v1"
+      + service_account_id        = (known after apply)
+      + status                    = (known after apply)
+      + zone                      = (known after apply)
+
+      + boot_disk {
+          + auto_delete = true
+          + device_name = (known after apply)
+          + disk_id     = (known after apply)
+          + mode        = (known after apply)
+
+          + initialize_params (known after apply)
+        }
+
+      + metadata_options (known after apply)
+
+      + network_interface {
+          + index              = (known after apply)
+          + ip_address         = (known after apply)
+          + ipv4               = true
+          + ipv6               = (known after apply)
+          + ipv6_address       = (known after apply)
+          + mac_address        = (known after apply)
+          + nat                = true
+          + nat_ip_address     = (known after apply)
+          + nat_ip_version     = (known after apply)
+          + security_group_ids = (known after apply)
+          + subnet_id          = (known after apply)
+        }
+
+      + placement_policy (known after apply)
+
+      + resources {
+          + core_fraction = 100
+          + cores         = 2
+          + memory        = 2
+        }
+
+      + scheduling_policy (known after apply)
+    }
+
+  # yandex_vpc_network.network-1 will be created
+  + resource "yandex_vpc_network" "network-1" {
+      + created_at                = (known after apply)
+      + default_security_group_id = (known after apply)
+      + folder_id                 = "b1gdjtjk7s19oqvpmgtp"
+      + id                        = (known after apply)
+      + labels                    = (known after apply)
+      + name                      = "network1"
+      + subnet_ids                = (known after apply)
+    }
+
+  # yandex_vpc_subnet.subnet-1 will be created
+  + resource "yandex_vpc_subnet" "subnet-1" {
+      + created_at     = (known after apply)
+      + folder_id      = "b1gdjtjk7s19oqvpmgtp"
+      + id             = (known after apply)
+      + labels         = (known after apply)
+      + name           = "subnet1"
+      + network_id     = (known after apply)
+      + v4_cidr_blocks = [
+          + "192.168.10.0/24",
+        ]
+      + v6_cidr_blocks = (known after apply)
+      + zone           = "ru-central1-a"
+    }
+
+Plan: 10 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + vm_ip     = {
+      + vm-1 = (known after apply)
+      + vm-2 = (known after apply)
+      + vm-3 = (known after apply)
+      + vm-4 = (known after apply)
+    }
+  + vm_nat_ip = {
+      + vm-1 = (known after apply)
+      + vm-2 = (known after apply)
+      + vm-3 = (known after apply)
+      + vm-4 = (known after apply)
+    }
+yandex_vpc_network.network-1: Creating...
+yandex_compute_disk.boot-disk["vm-4"]: Creating...
+yandex_compute_disk.boot-disk["vm-2"]: Creating...
+yandex_compute_disk.boot-disk["vm-3"]: Creating...
+yandex_compute_disk.boot-disk["vm-1"]: Creating...
+yandex_vpc_network.network-1: Creation complete after 1s [id=enp77v8457935dq2sf99]
+yandex_vpc_subnet.subnet-1: Creating...
+yandex_vpc_subnet.subnet-1: Creation complete after 1s [id=e9b18aqer6k3ott3ajk1]
+yandex_compute_disk.boot-disk["vm-2"]: Creation complete after 9s [id=fhmbid0cnmr6ueme6dcu]
+yandex_compute_disk.boot-disk["vm-4"]: Still creating... [10s elapsed]
+yandex_compute_disk.boot-disk["vm-3"]: Still creating... [10s elapsed]
+yandex_compute_disk.boot-disk["vm-1"]: Still creating... [10s elapsed]
+yandex_compute_disk.boot-disk["vm-1"]: Creation complete after 11s [id=fhmfvkr04hl02jrkc1kg]
+yandex_compute_disk.boot-disk["vm-4"]: Creation complete after 12s [id=fhmc4fr2ig91f6ihhiq3]
+yandex_compute_disk.boot-disk["vm-3"]: Creation complete after 13s [id=fhmlgtiu5tf8rpvgbim4]
+yandex_compute_instance.virtual_machine["vm-1"]: Creating...
+yandex_compute_instance.virtual_machine["vm-3"]: Creating...
+yandex_compute_instance.virtual_machine["vm-4"]: Creating...
+yandex_compute_instance.virtual_machine["vm-2"]: Creating...
+yandex_compute_instance.virtual_machine["vm-1"]: Still creating... [10s elapsed]
+yandex_compute_instance.virtual_machine["vm-3"]: Still creating... [10s elapsed]
+yandex_compute_instance.virtual_machine["vm-4"]: Still creating... [10s elapsed]
+yandex_compute_instance.virtual_machine["vm-2"]: Still creating... [10s elapsed]
+yandex_compute_instance.virtual_machine["vm-1"]: Still creating... [20s elapsed]
+yandex_compute_instance.virtual_machine["vm-3"]: Still creating... [20s elapsed]
+yandex_compute_instance.virtual_machine["vm-4"]: Still creating... [20s elapsed]
+yandex_compute_instance.virtual_machine["vm-2"]: Still creating... [20s elapsed]
+yandex_compute_instance.virtual_machine["vm-4"]: Creation complete after 27s [id=fhmvrljmvsel87a138i3]
+yandex_compute_instance.virtual_machine["vm-1"]: Creation complete after 29s [id=fhmfbnjfnh66be8k4vva]
+yandex_compute_instance.virtual_machine["vm-3"]: Still creating... [30s elapsed]
+yandex_compute_instance.virtual_machine["vm-2"]: Still creating... [30s elapsed]
+yandex_compute_instance.virtual_machine["vm-2"]: Creation complete after 35s [id=fhmi9ep1nbceh8qdfh8f]
+yandex_compute_instance.virtual_machine["vm-3"]: Still creating... [40s elapsed]
+yandex_compute_instance.virtual_machine["vm-3"]: Creation complete after 50s [id=fhmpn1s2j92se21hos4d]
+
+Apply complete! Resources: 10 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+vm_ip = {
+  "vm-1" = "192.168.10.11"
+  "vm-2" = "192.168.10.18"
+  "vm-3" = "192.168.10.10"
+  "vm-4" = "192.168.10.21"
+}
+vm_nat_ip = {
+  "vm-1" = "89.169.134.161"
+  "vm-2" = "89.169.140.182"
+  "vm-3" = "158.160.62.107"
+  "vm-4" = "89.169.142.173"
+}
