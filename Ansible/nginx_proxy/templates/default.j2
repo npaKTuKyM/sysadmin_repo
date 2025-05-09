@@ -1,0 +1,13 @@
+upstream balancer {
+        least_conn;
+        server 192.168.10.11:80 weight=2 max_fails=2 fail_timeout=10s;
+        server 192.168.10.18:80 weight=1 max_fails=2 fail_timeout=10s;
+    }
+
+    server {
+        listen 3000;
+
+        location / {
+            proxy_pass http://balancer;
+        }
+    }

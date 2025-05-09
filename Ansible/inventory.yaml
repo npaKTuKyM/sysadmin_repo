@@ -1,0 +1,22 @@
+---
+linux: #Группа хостов 
+  children: #Обозначение, что будет подгруппа хостов
+    nginx: #Имя подгруппы хостов
+      hosts: #Узлы группы
+        s19255427-web01: #Имя машины
+          ansible_host: 192.168.10.11 #Адрес машины
+        s19255427-web02:
+          ansible_host: 192.168.10.18
+    proxies:
+      hosts:
+        s19255427-proxy:
+          ansible_host: 192.168.10.10
+  vars: #Переменные, доступные или используемые для всех подгрупп
+    ansible_user: "ansible"
+#    ansible_password: "qwerty"
+#    ansible_private_key_file: "/home/ansible/.ssh/id_ansible_ed25519" 
+#    ansible_ssh_private_key_file: "/home/ansible/.ssh/id_ansible_ed25519" 
+    connection_protocol: ssh #тип подключения
+    ansible_become: true #Становиться ли другим пользователем после подключения
+...
+
