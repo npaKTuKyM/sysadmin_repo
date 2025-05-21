@@ -1,0 +1,20 @@
+#cloud-config
+
+package_update: true
+package_upgrade: true
+
+packages:
+  - mc
+
+ssh_pwauth: false
+
+users:
+- name: ansible
+  gecos: Ansible User
+  groups: users,admin,wheel
+  sudo: ALL=(ALL) NOPASSWD:ALL
+  shell: /bin/bash
+  lock_passwd: true
+  ssh_authorized_keys:
+    - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL+aHg5Lj+UU55rrFyHxKu/m6jggTy5bfCcNt87Y3dhA
+
