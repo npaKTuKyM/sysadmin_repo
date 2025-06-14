@@ -1,0 +1,18 @@
+---
+diplom: 
+  children:
+    wiki:
+      hosts:
+        s19255427-mw1:
+          ansible_host: '192.168.10.3'
+        s19255427-mw2:
+          ansible_host: '192.168.10.33'
+    proxies:
+      hosts:
+        s19255427-proxy:
+          ansible_host: '192.168.10.30'
+    zabbix:
+      hosts:
+        s19255427-zabbix:
+          ansible_host: '192.168.10.11'
+...

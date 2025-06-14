@@ -1,0 +1,54 @@
+---
+
+- name: "Install packages"
+  apt: name={{ item }} update_cache=yes state=latest force_apt_get=yes
+  loop: ['postgresql', 'postgresql-contrib', 'python3-psycopg2']
+
+- name: "Start and enable services"
+  service: "name=postgresql state=started enabled=yes"
+
+- name: "Postgres config file postgres.conf"
+  ansible.builtin.lineinfile:
+    path: /etc/postgresql/14/main/postgresql.conf
+    insertafter: 'Connection Settings'
+    line: listen_addresses = '*'
+    state: present
+    backup: true
+
+- name: "Postgres config file pg_hba.conf"
+  lineinfile:
+    path: /etc/postgresql/14/main/pg_hba.conf
+    insertafter: '# TYPE'
+    line: host {{ db_name }} {{ db_user }} 192.168.10.0/24 scram-sha-256
+    state: present
+    backup: yes
+
+- name: "Create database"
+  postgresql_db:
+    state: present
+    name: "{{ db_name }}"
+  become: true
+  become_user: postgres
+#  become_method: sudo
+#  vars:
+#    ansible_remote_tmp: /tmp/.ansible/tmp
+
+- name: "Create db user"
+  postgresql_user:
+    state: present
+    name: "{{ db_user }}"
+    password: "{{ db_pass }}"
+  become: true
+  become_user: postgres
+
+- name: "Grant db user access to db"
+  postgresql_privs:
+    type: database
+    database: "{{ db_name }}"
+    roles: "{{ db_user }}"
+    grant_option: true
+    privs: ALL
+  become: true
+  become_user: postgres
+...
+

@@ -1,0 +1,29 @@
+---
+# tasks file for nginx_wiki
+
+#- name: Install Prerequisites
+#  apt: name={{ item }} update_cache=yes state=latest force_apt_get=yes
+#  loop: [ 'aptitude' ]
+
+#- name: Install Packages
+#  apt: name={{ item }} update_cache=yes state=latest
+#  loop: [ 'nginx', 'php-fpm', 'php-pgsql' ]
+
+- name: Sets Nginx conf file
+  template:
+    src: "nginx.conf.j2"
+    dest: "/etc/nginx/sites-available/{{ nginx_conf }}"
+
+- name: Enables new site
+  file:
+    src: "/etc/nginx/sites-available/{{ nginx_conf }}"
+    dest: "/etc/nginx/sites-enabled/{{ nginx_conf }}"
+    state: link
+  notify: Reload Nginx
+
+- name: Removes "default" site
+  file:
+    path: "/etc/nginx/sites-enabled/default"
+    state: absent
+  notify: Reload Nginx
+...

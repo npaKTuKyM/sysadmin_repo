@@ -1,0 +1,45 @@
+---
+# Основной плейбук дипломного проекта по внедрению MediaWiki 
+
+- name: Общие настройки для всех хостов в группе all
+  hosts: all
+  roles:
+    - role: common
+  tags:
+    - common
+
+- name: Установка и настройка postgres на группе хостов wiki 
+  hosts: wiki
+  roles:
+    - role: postgres_wiki
+  tags:
+    - postgres_wiki
+
+- name: Установка и настройка nginx на группе хостов wiki
+  hosts: wiki  
+  roles:
+    - role: nginx_wiki
+  tags:
+    - nginx_wiki
+
+- name: Установка и настройка mediawiki на группе хостов wiki
+  hosts: wiki
+  roles:
+    - role: mediawiki
+  tags:
+    - mediawiki
+
+- name: Установка и настройка nginx reverse proxy (balancer)
+  hosts: proxies
+  roles:
+    - role: nginx_proxy
+  tags:
+    - nginx_proxy
+
+- name: Установка и настройка zabbix server на группе хостов zabbix
+  hosts: zabbix              
+  roles:
+    - role: zabbix_server
+  tags:
+    - zabbix_server
+...

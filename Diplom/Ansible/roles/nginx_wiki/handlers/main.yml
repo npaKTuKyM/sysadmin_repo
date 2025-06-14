@@ -1,0 +1,9 @@
+---
+# handlers file for nginx_wiki
+- name: Reload Nginx
+  service:
+    name: nginx
+    state: reloaded
+    enabled: yes
+  listen: "Reload Nginx"
+...

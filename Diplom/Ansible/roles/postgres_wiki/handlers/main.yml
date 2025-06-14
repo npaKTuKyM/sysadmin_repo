@@ -1,0 +1,10 @@
+---
+# handlers file for postgres_wiki
+
+- name: restart postgres
+  ansible.builtin.service:
+    name: postgresql
+    state: restarted
+    enabled: yes
+  listen: "restart postgres"
+...
