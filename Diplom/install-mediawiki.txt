@@ -34,13 +34,13 @@ sudo php maintenance/run.php install \
 --dbtype=postgres \
 --dbserver="192.168.10.3" \
 --installdbuser=postgres \
---installdbpass=12345678 \
+--installdbpass=******** \
 --dbuser=wikiuser \
---dbpass=12345678 \
+--dbpass=******** \
 --server="http://192.168.10.3/" \
 --scriptpath=/wiki \
 --lang=ru \
---pass=O98765432! «npaKTuKyM» "Admin"
+--pass=********** «npaKTuKyM» "Admin"
 
 sudo php maintenance/run.php install --dbname=my_wiki --dbport=5432 --dbschema=mediawiki --dbtype=postgres --dbserver="localhost" --installdbuser=postgres --installdbpass=12345678 --dbuser=wikiuser --dbpass=12345678 --server="http://localhost/" --scriptpath=/wiki --lang=ru --pass=12345678 «npaKTuKyM» "Admin"
 
@@ -52,13 +52,13 @@ sudo php maintenance/run.php install \
 --dbtype=postgres \
 --dbserver="192.168.10.33" \
 --installdbuser=postgres \
---installdbpass=12345678 \
+--installdbpass=******** \
 --dbuser=wikiuser \
---dbpass=12345678 \
+--dbpass=******** \
 --server="http://192.168.10.33/" \
 --scriptpath=/wiki \
 --lang=ru \
---pass=O98765432! «npaKTuKyM» "Admin"
+--pass=********** «npaKTuKyM» "Admin"
 
 
 Running the MediaWiki configuration script in the web browser
