@@ -6,7 +6,7 @@ virtual_machines = {
     ram       = 2                      # Оперативная память в ГБ
     disk      = 15                     # Объём диска в ГБ
     disk_name = "s19255427-vm1-disk"   # Название диска
-    template  = "fd8136cthbfr503tjj72" # ID образа ОС для использования Ubuntu-2204
+    template  = "fd8136cthbfr503*****" # ID образа ОС для использования Ubuntu-2204
     pf-id     = "standard-v3"
     vm_host   = "s19255427-mw1"
   },
@@ -17,7 +17,7 @@ virtual_machines = {
     ram       = 2                      # Оперативная память в ГБ
     disk      = 15                     # Объём диска в ГБ
     disk_name = "s19255427-vm2-disk"   # Название диска
-    template  = "fd8136cthbfr503tjj72" # ID образа ОС для использования Ubuntu-2204
+    template  = "fd8136cthbfr503*****" # ID образа ОС для использования Ubuntu-2204
     pf-id     = "standard-v3"
     vm_host   = "s19255427-mw2"
   },
@@ -28,7 +28,7 @@ virtual_machines = {
     ram       = 2                      # Оперативная память в ГБ
     disk      = 15                     # Объём диска в ГБ
     disk_name = "s19255427-vm3-disk"   # Название диска
-    template  = "fd8136cthbfr503tjj72" # ID образа ОС для использования Ubuntu-2204
+    template  = "fd8136cthbfr503*****" # ID образа ОС для использования Ubuntu-2204
     pf-id     = "standard-v3"
     vm_host   = "s19255427-proxy"
   },
@@ -39,7 +39,7 @@ virtual_machines = {
     ram       = 2                      # Оперативная память в ГБ
     disk      = 15                     # Объём диска в ГБ
     disk_name = "s19255427-vm4-disk"   # Название диска
-    template  = "fd8136cthbfr503tjj72" # ID образа ОС для использования Ubuntu-2204
+    template  = "fd8136cthbfr503*****" # ID образа ОС для использования Ubuntu-2204
     pf-id     = "standard-v3"
     vm_host   = "s19255427-zabbix"
   }
