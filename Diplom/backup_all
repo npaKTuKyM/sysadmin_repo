@@ -1,0 +1,56 @@
+#!/bin/bash
+# Скрипт создания резервных копий каталога mediawiki и базы данных my_wiki
+
+# Опции для отладки
+# set -o pipefail
+# set -o noexec # set -n
+# set -o nounset # set -u
+# set -o verbose # set -v
+# set -o errexit # set -e
+# set -o xtrace # set -x
+
+# Блок инициализации переменных
+current_date="$(date +%F_%H-%M)"                        # Текущая дата и время
+log_file="backup_$(date +%F).log"                       # Имя файла журнала
+src_dir="/var/www/mediawiki"                            # Исходный каталог mediawiki
+back_dir="/home/ansible/backup"                         # Целевой каталог с резервными копиями
+back_mw_file="mediawiki_backup_${current_date}.tar.gz"  # Имя файла для бэкапа mediawiki
+back_db_file="my_wiki_backup_${current_date}.tar.gz"    # Имя файла для бэкапа my_wiki
+db_host="localhost"                                     # Имя или адрес сервера баз данных
+db_name="my_wiki"                                       # Имя базы данных
+db_user="wikiuser"                                      # Пользователь базы данных
+export PGPASSWORD=12345678         # Объявление переменной окружения с паролем для базы данных
+
+create_mw_backup(){ # Функция создания резервной копии каталога mediawiki
+  printf "Создание резервной копии каталога mediawiki...\n"
+  # time tar -cvzf ~/backup/mediawiki_backup_$(date +%F_%H-%M).tar.gz -C "${src_dir%/*}" "${src_dir##*/}"
+  if tar -czf "${back_dir}"/"${back_mw_file}" -C "${src_dir%/*}" "${src_dir##*/}" ; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+create_db_backup(){ # Функция создания резервной копии базы данных my_wiki
+  printf "Создание резервной копии базы данных my_wiki...\n"
+  # time pg_dump -h localhost -U wikiuser -Ft my_wiki | gzip > ~/backup/my_wiki_backup_$(date +%F_%H-%M).tar.gz
+  # time pg_dump -h 127.0.0.1 -U wikiuser -Fc -b -v my_wiki | gzip > ~/backup/my_wiki_backup_$(date +%F_%H-%M).bin.gz 
+  if pg_dump -h "${db_host}" -U "${db_user}" -Ft "${db_name}" | gzip > "${back_dir}"/"${back_db_file}" ; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+# Основной код скрипта
+find "${back_dir}" -type f -name '*.tar.gz' -ctime +14 -delete  # Удаление архивных файлов в каталоге старше 15 суток
+create_mw_backup && create_db_backup
+if [[ "${PIPESTATUS[0]}" == 0 ]]; then
+  echo "${current_date}: Создание обеих резервных копий завершено УСПЕШНО!" | tee -a ~/"${log_file}"
+else
+  echo "${current_date}: Создание резервных копий завершилось с ОШИБКОЙ!" | tee -a ~/"${log_file}"
+fi
+unset PGPASSWORD    # Удаление переменной окружения с паролем для базы данных
+
+# pg_restore -Fc zabbix.bak         # pg_restore -Ft -C zabbix.tar
+# psql zabbix < /tmp/zabbix.dump    # psql -U zabbix -W zabbix < /tmp/zabbix.dump

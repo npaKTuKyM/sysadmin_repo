@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Скрипт синхронизации резервных копий с сервера s19255427-mw1 на сервер s19255427-ansible 
+
+# Опции для отладки
+#set -o pipefail
+#set -o noexec # set -n
+#set -o nounset # set -u
+#set -o verbose # set -v
+#set -o errexit # set -e
+#set -o xtrace # set -x
+
+# Блок инициализации переменных
+remote_user="ansible"
+remote_server="mw1"
+source_path="/home/ansible/backup/"
+dest_path="/home/ansible/backup/"
+current_date="$(date +%F_%H-%M)"
+log_file="rsync_$(date +%F).log"
+
+get_backup(){ # Функция синхронизации каталогов с резервными копиями
+  printf "Запуск синхронизации резервных копий...\n"
+  if rsync -avzh --progress --delete "${remote_user}"@"${remote_server}":"${source_path}" "${dest_path}" ; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+# Основной код скрипта
+get_backup
+if [[ $? -eq 0 ]]; then
+  echo "${current_date}: Cинхронизация каталогов завершилась УСПЕШНО!" | tee -a ~/"${log_file}"
+else
+  echo "${current_date}: Cинхронизация каталогов завершилась с ОШИБКОЙ!" | tee -a ~/"${log_file}"
+fi
