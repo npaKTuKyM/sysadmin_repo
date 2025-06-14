@@ -1,0 +1,168 @@
+
+sudo apt update && sudo apt upgrade -y
+sudo apt install nginx postgresql -y
+
+cd /tmp/
+wget https://releases.wikimedia.org/mediawiki/1.43/mediawiki-1.43.1.tar.gz
+curl -O https://releases.wikimedia.org/mediawiki/1.43/mediawiki-1.43.1.tar.gz
+
+tar -xvzf /tmp/mediawiki-*.tar.gz
+sudo mkdir /var/lib/mediawiki
+sudo mv mediawiki-*/* /var/lib/mediawiki
+
+sudo su postgres
+createuser -S -D -R -P -E wikiuser
+createdb -O wikiuser my_wiki
+
+postgres=# \password postgres
+Enter new password: <new-password>
+postgres=# \q
+
+sudo -u postgres psql -c "ALTER USER postgres PASSWORD '<new-password>';"
+
+
+sudo apt install php-fpm php php-pgsql php-intl php-gd php-xml php-mbstring php-apcu php-curl php-cli -y
+
+sudo apt install php php-intl php-mbstring php-xml php-apcu php-curl php-pgsql php-gd php-cli -y
+
+sudo ln -s /var/lib/mediawiki /var/www/html/mediawiki
+
+sudo php maintenance/run.php install \
+--dbname=my_wiki \
+--dbport=5432 \
+--dbschema=mediawiki \
+--dbtype=postgres \
+--dbserver="192.168.10.3" \
+--installdbuser=postgres \
+--installdbpass=12345678 \
+--dbuser=wikiuser \
+--dbpass=12345678 \
+--server="http://192.168.10.3/" \
+--scriptpath=/wiki \
+--lang=ru \
+--pass=O98765432! «npaKTuKyM» "Admin"
+
+sudo php maintenance/run.php install --dbname=my_wiki --dbport=5432 --dbschema=mediawiki --dbtype=postgres --dbserver="localhost" --installdbuser=postgres --installdbpass=12345678 --dbuser=wikiuser --dbpass=12345678 --server="http://localhost/" --scriptpath=/wiki --lang=ru --pass=12345678 «npaKTuKyM» "Admin"
+
+
+sudo php maintenance/run.php install \
+--dbname=my_wiki \
+--dbport=5432 \
+--dbschema=mediawiki \
+--dbtype=postgres \
+--dbserver="192.168.10.33" \
+--installdbuser=postgres \
+--installdbpass=12345678 \
+--dbuser=wikiuser \
+--dbpass=12345678 \
+--server="http://192.168.10.33/" \
+--scriptpath=/wiki \
+--lang=ru \
+--pass=O98765432! «npaKTuKyM» "Admin"
+
+
+Running the MediaWiki configuration script in the web browser
+
+MediaWiki 1.38 web installer
+In the following examples, it is assumed that your website is located at http://www.example.com/. The physical location on your server depends on your web server software configuration. Adjust the examples as needed.
+	1	Open a web browser and browse to the website address or path that you configured for MediaWiki in the web server software.
+	2	You will see the version of MediaWiki which you extracted and a link to "Please set up the wiki first." Click on the link to begin the configuration script. For reference (in case you want to go there directly), this is located in MediaWiki's mw-config directory (so using the example above you would go to http://www.example.com/mw-config/, or on a local machine http://localhost/mw-config/).
+	3	After selecting the language, the configuration script performs some environmental checks.
+	4	Follow the instructions on the pages to connect to the database, create the MediaWiki administrator account, and to set further settings such as the logo or skin.Since LocalSettings.php stores the database user's password in plain text, it is strongly suggested that you create a wiki specific database account (i.e. not root).
+	5	The script will populate the database and write a configuration file.
+	6	After the configuration script has finished, download the generated configuration file LocalSettings.php and place the file in the base directory of your MediaWiki installation.
+LocalSettings.php contains all the information needed by MediaWiki to run.
+Set stringent file permissions which system users can read and write the LocalSettings.php file.
+For example, set chmod 600 and chown <webserver owner> (Owner read and write, no other permissions).
+
+
+
+PostgreSQL[edit]
+You can use the pg_dump tool to back up a MediaWiki PostgreSQL database. For example:
+
+pg_dump mywiki > mywikidump.sql
+
+will dump the mywiki database to mywikidump.sql.
+
+To restore the dump:
+
+psql mywiki -f mywikidump.sql
+
+You may also want to dump the global information, e.g. the database users:
+
+pg_dumpall --globals > postgres_globals.sql
+
+
+
+wiki-backup.timer[edit]
+The following timer runs the wiki-backup service at 5:10 AM every morning.
+$ cat /etc/systemd/system/wiki-backup.timer
+
+[Unit]
+Description=Run the backup service once a day
+Documentation=...
+
+[Timer]
+OnCalendar=*-*-* 05:10:00
+RandomizedDelaySec=600
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+
+
+wiki-backup.service[edit]
+When the wiki-backup timer fires, then the service is invoked. The service runs a script located in /sbin.
+$ cat /etc/systemd/system/wiki-backup.service
+
+[Unit]
+Description=Run the backup service once a day
+Documentation=...
+
+[Service]
+Type=oneshot
+User=root
+ExecStart=/sbin/wiki-backup
+
+
+
+
+s19255427@s19255427-01:/var/lib/mediawiki$ php maintenance/run.php install --dbname=my_wiki --dbport=5432 --dbschema=mediawiki --dbtype=postgres --dbserver="localhost" --installdbuser=postgres --installdbpass=123 --dbuser=wikiuser --dbpass=123 --server="http://localhost/" --scriptpath=/wiki --lang=ru --pass=O98765432! «npaKTuKyM» "Admin"
+
+Установленная версия PHP: 8.1.2-1ubuntu2.21.
+ICU 70.1 установлен (поддерживает Unicode 14.0.0).
+Обнаружен ImageMagick: /usr/bin/convert. Возможно отображение миниатюр изображений, если вы разрешите закачки файлов.
+Найдена система контроля версий Git: /usr/bin/git.
+Используется имя сервера «http://localhost».
+Используется URL сервера «http://localhost//wiki».
+Предупреждение: каталог для загрузки по умолчанию (/var/lib/mediawiki/images/) не проверялся на уязвимости на выполнение произвольного скрипта во время установки CLI.
+Предупреждение: Из-за ошибки подключения невозможно проверить, что изображения в вашем каталоге загрузки отвечают HTTP-заголовком X-Content-Type-Options: nosniff, чтобы защитить браузеры от потенциально небезопасных файлов. Настоятельно рекомендуется mediawiki.org/wiki/Special:MyLanguage/Manual:Security#Upload_security настроить соответствующие заголовки ответа на вашем веб-сервере перед включением загрузки.
+Проверка внешней среды была успешно проведена. Вы можете установить MediaWiki.
+Настройка базы данных
+выполнено
+Создание базы данных пользователей
+выполнено
+Проверка языка PL/pgSQL
+выполнено
+Создание схемы
+выполнено
+Создание таблиц, первый шаг
+выполнено
+Заполнение таблицы интервики значениями по умолчанию
+выполнено
+Статистика инициализации
+выполнено
+Создание секретных ключей
+выполнено
+Предотвращение запуска ненужных обновлений
+выполнено
+Восстановление сервисов MediaWiki
+выполнено
+Создание учётной записи администратора
+выполнено
+Создание главной страницы с содержимым по умолчанию
+выполнено
+База данных была успешно настроена
+PHP Warning:  file_put_contents(/var/lib/mediawiki/LocalSettings.php): Failed to open stream: Permission denied in /var/lib/mediawiki/includes/installer/LocalSettingsGenerator.php on line 221
+MediaWiki успешно установлена. Сейчас вы можете перейти на <http://localhost/ /wiki>, чтобы просмотреть свою вики. Если у вас есть вопросы, ознакомьтесь с нашим часто задаваемыми вопросами: <https://www.mediawiki.org/wiki/Special:MyLanguage/Manual:FAQ> или используйте один из форумов поддержки, указанный на этой странице.
+
