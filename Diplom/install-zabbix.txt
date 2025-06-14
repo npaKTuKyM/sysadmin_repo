@@ -3,8 +3,6 @@
 sudo apt update && sudo apt upgrade -y
 sudo apt install nginx postgresql -y
 
-http://51.250.73.66:8080/index.php
-
 #Install and configure Zabbix for your platform
 #a. Become root user
 #Start new shell session with root privileges.
