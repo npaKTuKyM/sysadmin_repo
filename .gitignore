@@ -1,0 +1,19 @@
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+
+# Hidden files
+.DS_Store
+
+# Build artifacts
+build/
+dist/
+
+# Editor configuration
+~/.editorconfig
+
+# Personal configuration
+~/.ssh/id_rsa
